@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import Person from './Person/Person'
 
-class Persons extends Component{
+class Persons extends PureComponent{
   // static getDerivedStateFromProps(props, state){
   //   console.log('[Persons.js] getDerivedStateFromProps')
   //   return state
@@ -11,10 +11,17 @@ class Persons extends Component{
   //   console.log('Perosns.js] Componentwillreciveprops')
   // }
 
-  shouldComponentUpdate(nextProps, nextState){
-    console.log('[Persons.js] shouldComponentUpdate')
-    return true
-  }
+  // shouldComponentUpdate(nextProps, nextState){
+  //   console.log('[Persons.js] shouldComponentUpdate')
+  //   if(nextProps.Persons !== this.props.persons || nextProps.changed !== this.props.changed || nextProps.clicked !== this.props.clicked){
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  //   //return true
+  // }
+
+  //PureComponenet instead of checking if all props change. Use regular component if you are only checking some props
 
   getSnapshotBeforeUpdate(prevProps, prevState){
     console.log('[Perosns.js] getssnapshotbeforUopdate')
@@ -31,9 +38,13 @@ class Persons extends Component{
     console.log(snapshot)
   }
 
+  componentWillUnmount(){
+    console.log('component will unmount')
+  }
+
   render(){
     console.log('[Persons.js] rendering...')
-    return this.props.persons.map( (person, index) => {
+    return (this.props.persons.map( (person, index) => {
       return (
       <Person 
         click={() => this.props.clicked(index)}
@@ -44,6 +55,7 @@ class Persons extends Component{
         /> 
       )
     })
+    )
   }
 }
 
